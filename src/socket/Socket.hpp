@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:54:58 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/16 02:05:08 by edos-san         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:12:12 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <sys/poll.h>
 
 #define BUFFER_SIZE 1024
+#define TIME_OUT 3 * 60 * 1000
 typedef struct pollfd event;
 
 class Socket 
@@ -41,11 +42,13 @@ class Socket
 		event				_fds[201];
 
 	public:
+		Socket();
 		Socket(std::string name,int port, int maxClient);
 		~Socket();
-		void	socketListen(void);
-		int		getFd(){return (_fd);};
-		int		getMaxClient()  const{return (_maxClient);}
+		int		socketListen(void);
+		int		getMaxClient();
+		int		getFd();
+		event	*getEvent(int i);
 };
 
 #endif

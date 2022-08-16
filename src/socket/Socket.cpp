@@ -6,12 +6,13 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:59:02 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/16 02:39:50 by edos-san         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:12:37 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Socket.hpp"
 
+Socket::Socket(){}
 
 Socket::Socket(std::string name,int port, int maxClient): _name(name), _port(port), _maxClient(maxClient)
 {
@@ -46,29 +47,25 @@ Socket::Socket(std::string name,int port, int maxClient): _name(name), _port(por
 
 Socket::~Socket()
 {
-	
+	std::cout << "~Socket\n";
 }
 
-void Socket::socketListen(void)
+int Socket::socketListen(void)
 {
-	int    timeout, ic;
-  	timeout = (3 * 60 * 1000);
+	return (poll(_fds, 1, TIME_OUT));
+}
 
-	while (1)
-	{
-		ic = poll(_fds, 1, timeout);
-		if (ic <= 0)
-			return ;
-		for (int i = 0; i < _maxClient; i++)
-    	{
-    		if(_fds[i].revents == 0)
-    			continue;
-			std::cout << "socket: " << _fd << " poll: " << ic << "\n";
-			if (_fds[i].fd == _fd)
-				
-			_fds[i].fd = 0;
-		}
-	}
+int		Socket::getMaxClient()
+{
+	return (_maxClient);
+}
+
+int		Socket::getFd()
+{
+	return (_fd);
 }
 	
-  
+event	*Socket::getEvent(int i)
+{
+	return (&_fds[i]);
+}

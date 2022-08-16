@@ -8,7 +8,7 @@ make: *** No rule to make target 'main.o', needed by 'websserv'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 16 02:40:50 2022
+# Make data base, printed on Tue Aug 16 13:51:18 2022
 
 # Variables
 
@@ -17,11 +17,9 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-NO_AT_BRIDGE = 1
-# environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-GNOME_KEYRING_CONTROL = /nfs/homes/edos-san/.cache/keyring-7ZS0Q1
+GNOME_KEYRING_CONTROL = /nfs/homes/edos-san/.cache/keyring-92I2Q1
 # environment
 SBX_CHROME_API_RQ = 1
 # environment
@@ -57,7 +55,7 @@ XDG_DATA_DIRS = /app/share:/usr/share:/usr/share/runtime/share:/run/host/user-sh
 # environment
 VSCODE_CODE_CACHE_PATH = /nfs/homes/edos-san/.var/app/com.visualstudio.code/config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session3
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session4
 # environment
 LANG = C
 # environment
@@ -77,7 +75,7 @@ CURDIR := /sgoinfre/edos-san/WebServer
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # makefile (from 'Makefile', line 17)
-SRCS = main.cpp ./src/server/Server.cpp ./src/client/Client.cpp ./src/socket/Socket.cpp
+SRCS = main.cpp ./src/server/Server.cpp ./src/client/Client.cpp ./src/stream/request/RequestStream.cpp ./src/stream/response/ResponseStream.cpp ./src/socket/Socket.cpp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -105,7 +103,7 @@ FLATPAK_SANDBOX_DIR = /nfs/homes/edos-san/.var/app/com.visualstudio.code/sandbox
 # environment
 VSCODE_PID = 23
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_10323_LkgvA4
+KRB5CCNAME = FILE:/tmp/krb5cc_10323_sPK0Ix
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -117,7 +115,7 @@ XDG_DATA_HOME = /nfs/homes/edos-san/.var/app/com.visualstudio.code/data
 # environment
 SANDBOX_LD_PRELOAD = /app/bin/../lib/libzypak-preload-host.so:/app/bin/../lib/libzypak-preload-host-spawn-strategy.so
 # environment
-SESSION_MANAGER = local/c2r6s2.42lisboa.com:@/tmp/.ICE-unix/53397,unix/c2r6s2.42lisboa.com:/tmp/.ICE-unix/53397
+SESSION_MANAGER = local/c2r6s2.42lisboa.com:@/tmp/.ICE-unix/162205,unix/c2r6s2.42lisboa.com:/tmp/.ICE-unix/162205
 # automatic
 *F = $(notdir $*)
 # environment
@@ -132,7 +130,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS = /etc/egl/egl_external_platform.d:/usr/lib/x86_64-linux-gnu/GL/egl/egl_external_platform.d:/usr/share/egl/egl_external_platform.d
 # default
 MAKE_HOST := x86_64-unknown-linux-gnu
-# makefile (from 'Makefile', line 22)
+# makefile (from 'Makefile', line 24)
 OBJS = $(SRCS:.cpp=.o)
 # environment
 GNOME_DESKTOP_SESSION_ID = this-is-deprecated
@@ -207,9 +205,9 @@ DISPLAY = :99.0
 # default
 MAKE_VERSION := 4.3
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 152961
+GIO_LAUNCHED_DESKTOP_FILE_PID = 163328
 # environment
-SSH_AGENT_PID = 53491
+SSH_AGENT_PID = 162300
 # environment
 _ = /usr/bin/make
 # environment
@@ -255,7 +253,7 @@ ZYPAK_BIN = /app/bin
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=121/1024=12%, Rehash=0, Collisions=16/153=10%
+# Load=120/1024=12%, Rehash=0, Collisions=16/152=11%
 
 # Pattern-specific Variable Values
 
@@ -281,33 +279,45 @@ src/server/Server.o:
 
 v:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 43):
+ 
+#  recipe to execute (from 'Makefile', line 45):
 	@make re && make clean && clear && valgrind --leak-check=full --log-file="logfile.out" -v ./$(NAME):
 
-websserv: main.o src/server/Server.o src/client/Client.o src/socket/Socket.o
+websserv: main.o src/server/Server.o src/client/Client.o src/stream/request/RequestStream.o src/stream/response/ResponseStream.o src/socket/Socket.o
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 27):
+#  recipe to execute (from 'Makefile', line 29):
 		 $(CC) $(CFLAG) -o $(NAME) $(OBJS)
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-15 22:49:11.141483422
+#  Last modified 2022-08-16 13:51:02.602939282
 #  File has been updated.
 #  Successfully updated.
+
+# Not a target:
+src/stream/request/RequestStream.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 clean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 30):
+#  recipe to execute (from 'Makefile', line 32):
 	@$(RM) $(OBJS)
+
+# Not a target:
+src/stream/response/ResponseStream.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 re: fclean all
 #  Phony target (prerequisite of .PHONY).
@@ -333,7 +343,7 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 33):
+#  recipe to execute (from 'Makefile', line 35):
 	@$(RM) $(NAME)
 
 # Not a target:
@@ -352,21 +362,21 @@ r:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 47):
+#  recipe to execute (from 'Makefile', line 49):
 	@make re && make clean && clear && ./$(NAME)
 
 norm:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 38):
+#  recipe to execute (from 'Makefile', line 40):
 	@norminette -R CheckForbiddenSourceHeader $(SRCS)
 
 e:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 45):
+#  recipe to execute (from 'Makefile', line 47):
 	@make re && make clean && clear && valgrind --leak-check=full --track-origins=yes ./$(NAME):
 
 # Not a target:
@@ -387,19 +397,19 @@ m: fclean
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=18/1024=2%, Rehash=0, Collisions=0/44=0%
+# Load=20/1024=2%, Rehash=0, Collisions=0/48=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 26 / storage = 196 B / avg = 7 B
-# current buf: size = 8162 B / used = 196 B / count = 26 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 28 / storage = 268 B / avg = 9 B
+# current buf: size = 8162 B / used = 268 B / count = 28 / avg = 9 B
 
-# strcache performance: lookups = 52 / hit rate = 50%
+# strcache performance: lookups = 54 / hit rate = 48%
 # hash-table stats:
-# Load=26/8192=0%, Rehash=0, Collisions=0/52=0%
-# Finished Make data base on Tue Aug 16 02:40:50 2022
+# Load=28/8192=0%, Rehash=0, Collisions=0/54=0%
+# Finished Make data base on Tue Aug 16 13:51:18 2022
 
  

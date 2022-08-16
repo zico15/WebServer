@@ -1,40 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Client.cpp                                         :+:      :+:    :+:   */
+/*   RequestStream.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/15 22:40:38 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/16 14:47:51 by edos-san         ###   ########.fr       */
+/*   Created: 2022/08/16 13:47:58 by edos-san          #+#    #+#             */
+/*   Updated: 2022/08/16 13:48:31 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Client.hpp"
+#include "RequestStream.hpp"
 
-Client::Client()
+RequestStream::RequestStream()
 {
-    
+	
 }
 
-Client::~Client() 
+RequestStream::~RequestStream()
 {
-    
-}
-
-void Client::listen()
-{
-    std::cout << "Client: ";
-    do {
-        recv(fd, buffer, 1024, 0);
-        std::cout << buffer << " ";
-        if (*buffer == '#')
-            *buffer = '*';
-    } while (*buffer != '*');
-      std::cout << "Client filizer\n";
-}
-
-void Client::run()
-{
-    
+	
 }

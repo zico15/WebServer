@@ -6,7 +6,7 @@
 #    By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/15 21:46:08 by edos-san          #+#    #+#              #
-#    Updated: 2022/08/15 22:49:11 by edos-san         ###   ########.fr        #
+#    Updated: 2022/08/16 13:51:02 by edos-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ NAME		= 	websserv
 SRCS		= 	main.cpp \
 				./src/server/Server.cpp \
 				./src/client/Client.cpp \
+				./src/stream/request/RequestStream.cpp \
+				./src/stream/response/ResponseStream.cpp \
 				./src/socket/Socket.cpp
 
 OBJS		= 	$(SRCS:.cpp=.o)

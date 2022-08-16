@@ -1,44 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Client.hpp                                         :+:      :+:    :+:   */
+/*   RequestStream.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/15 21:32:55 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/16 14:43:15 by edos-san         ###   ########.fr       */
+/*   Created: 2022/08/16 13:38:44 by edos-san          #+#    #+#             */
+/*   Updated: 2022/08/16 13:50:02 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLIENT_HPP
-# define CLIENT_HPP
+#ifndef STREAM_HPP
+# define STREAM_HPP
 
-#include <string>
-#include <iostream>
-#include <sys/socket.h>
-#include <list>
+#include "../BaseStream.hpp"
 
-#include "../stream/BaseStream.hpp"
-
-class Client {
-
+class RequestStream: public BaseStream
+{
 	private:
-		int					fd;
-		bool				is_online;
-        char                buffer[1024];
-		BaseStream 			*response;
-		BaseStream 			*request;
+		/* data */
 	public:
-		Client();
-		~Client();
-		void init(int fd)
-		{
-			fd = 0;
-			is_online = false;
-		}
-
-		void listen();
-		void run();
+		RequestStream(/* args */);
+		~RequestStream();
 };
+
 
 #endif
