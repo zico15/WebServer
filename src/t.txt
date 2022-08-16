@@ -1,0 +1,48 @@
+   while (server > 0) 
+    {
+        strcpy(buffer, "=> Server connected...\n");
+        send(server, buffer, bufsize, 0);
+        std::cout << "=> Connected with the client #" << clientCount << ", you are good to go..." << std::endl;
+        std::cout << "\n=> Enter # to end the connection\n" << std::endl;
+
+        std::cout << "Client: ";
+        do {
+            recv(server, buffer, bufsize, 0);
+            std::cout << buffer << " ";
+            if (*buffer == '#') {
+                *buffer = '*';
+                isExit = true;
+            }
+        } while (*buffer != '*');
+
+        do {
+            std::cout << "\nServer: ";
+            do {
+                std::cin >> buffer;
+                send(server, buffer, bufsize, 0);
+                if (*buffer == '#') {
+                    send(server, buffer, bufsize, 0);
+                    *buffer = '*';
+                    isExit = true;
+                }
+            } while (*buffer != '*');
+
+            std::cout << "Client: ";
+            do {
+                recv(server, buffer, bufsize, 0);
+                std::cout << buffer << " ";
+                if (*buffer == '#') {
+                    *buffer == '*';
+                    isExit = true;
+                }
+            } while (*buffer != '*');
+        } while (!isExit);
+
+        std::cout << "\n\n=> Connection terminated with IP " << inet_ntoa(server_addr.sin_addr);
+        close(server);
+        std::cout << "\nGoodbye..." << std::endl;
+        isExit = false;
+        exit(1);
+    }
+
+    close(client);
