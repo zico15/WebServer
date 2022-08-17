@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:36:54 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/16 14:53:00 by edos-san         ###   ########.fr       */
+/*   Updated: 2022/08/17 00:05:43 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 Server::Server(){}
 
-Server::Server(std::string name, int port, int maxClient): _clients(maxClient)
+Server::Server(std::string name, int port, int maxClient)
 {
-
     _socket = new Socket(name, port, maxClient);
     std::cout << "Server has been created: " << port;
     std::cout << " MaxClient: " << _socket->getMaxClient() << std::endl;
@@ -33,28 +32,38 @@ void Server::listen()
     			continue;
 			if (_socket->getEvent(i)->fd == _socket->getFd())
 				createClient();
-            else
-                runClient(_socket->getEvent(i)->fd);
+            else if (_socket->getEvent(i)->client.isOnline())
+            {
+                //int f = _socket->getEvent(i)->client._fd;
+               // std::cout << "Run Client: " << std::to_string(f) << "\n";
+                _socket->getEvent(i)->client.run();
+            }
 		}
-        for(int i = 0; i < actions.size(); i++)
-            actions[i]->run();
+        /*for(int i = 0; i < actions.size(); i++)
+            actions[i]->run();*/
     }
     catch(const std::exception& e)
     {
         std::cout << "error: " << e.what() << '\n';
-    }         
+    }   
 }
 
 void Server::createClient()
 {
-     _clients[0] = new Client();
+    int fd = _socket->socketAccept();
+    if (fd < 0)
+        return ;
+    Client *client = _socket->createClient(fd);
+    std::cout << "Create Client: " << std::to_string(fd) << "\n";
 }
 
 void Server::runClient(int fd)
 {
     try
     {
-        actions.push_back(_clients[fd]);
+        //std::cout << "runClient: " <<  _clients[fd]->_fd << "\n" ;
+      
+        //actions.push_back(_clients[fd]);
     }
     catch(const std::exception& e)
     {

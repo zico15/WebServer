@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:54:58 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/16 13:12:12 by edos-san         ###   ########.fr       */
+/*   Updated: 2022/08/16 23:24:06 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <sys/poll.h>
+#include <fcntl.h>
+
+#include  "../client/Client.hpp"
 
 #define BUFFER_SIZE 1024
 #define TIME_OUT 3 * 60 * 1000
-typedef struct pollfd event;
 
 class Socket 
 {
@@ -49,6 +51,9 @@ class Socket
 		int		getMaxClient();
 		int		getFd();
 		event	*getEvent(int i);
+		int		socketAccept(void);
+		void	setEvent(int i, int fd, int event);
+		Client *createClient(int fd_client);
 };
 
 #endif

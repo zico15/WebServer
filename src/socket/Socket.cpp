@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:59:02 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/16 13:12:37 by edos-san         ###   ########.fr       */
+/*   Updated: 2022/08/16 23:53:32 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ Socket::Socket(std::string name,int port, int maxClient): _name(name), _port(por
 		exit(1);
 	}
 	_ic = setsockopt(_fd, SOL_SOCKET,  SO_REUSEADDR, (char *)&_addr, sizeof(on));
-  	_ic = ioctl(_fd, FIONBIO, (char *)&on);
+	_ic = setsockopt(_fd, SOL_SOCKET,  SO_REUSEPORT, (char *)&_addr, sizeof(on));
+	_ic =  fcntl(_fd, F_SETFL, O_NONBLOCK);
   	if (_ic < 0)
   	{
   	  perror("ioctl() failed");
@@ -40,9 +41,12 @@ Socket::Socket(std::string name,int port, int maxClient): _name(name), _port(por
 		return ;
 	}
 	_size = sizeof(_addr);
-	listen(_fd, 1);
+	listen(_fd, maxClient);
 	_fds[0].fd = _fd;
   	_fds[0].events = POLLIN;
+	for (size_t i = 1; i < maxClient; i++)
+		setEvent(i, -1, 0);
+	//POLLOUT
 }
 
 Socket::~Socket()
@@ -52,7 +56,8 @@ Socket::~Socket()
 
 int Socket::socketListen(void)
 {
-	return (poll(_fds, 1, TIME_OUT));
+	struct timespec ts = { .tv_sec = 0, .tv_nsec = 2 };
+	return (ppoll((pollfd *)_fds, _maxClient, &ts, NULL));
 }
 
 int		Socket::getMaxClient()
@@ -64,8 +69,37 @@ int		Socket::getFd()
 {
 	return (_fd);
 }
-	
+
+int	Socket::socketAccept(void)
+{
+	return (accept(_fd, (struct sockaddr*)&_addr, &_size));
+}
+
 event	*Socket::getEvent(int i)
 {
 	return (&_fds[i]);
+}
+
+void	Socket::setEvent(int i, int fd, int event)
+{
+	_fds[i].fd = fd;
+  	_fds[i].events = event;
+}
+
+Client *Socket::createClient(int fd_client)
+{
+	size_t i;
+	Client *c = NULL;
+	for (i = 1; i < _maxClient; i++)
+    {
+        if (_fds[i].fd == -1)
+            break;
+    }
+	if (i < _maxClient)
+	{
+		c = &getEvent(i)->client;
+		c->init(getEvent(i),fd_client);
+		std::cout << std::to_string(getEvent(i)->client._fd) << " <==\n";
+	}
+	return (c);
 }

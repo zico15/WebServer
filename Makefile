@@ -6,12 +6,12 @@
 #    By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/15 21:46:08 by edos-san          #+#    #+#              #
-#    Updated: 2022/08/16 13:51:02 by edos-san         ###   ########.fr        #
+#    Updated: 2022/08/17 00:06:43 by edos-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC 			=  c++
-CFLAGS 		=  -Wall -Wextra -Werror -std=c++98
+CFLAG		=  -Wall -Wextra -Werror -std=c++98
 RM			= 	/bin/rm -f
 NAME		= 	websserv
 SRCS		= 	main.cpp \
@@ -19,6 +19,7 @@ SRCS		= 	main.cpp \
 				./src/client/Client.cpp \
 				./src/stream/request/RequestStream.cpp \
 				./src/stream/response/ResponseStream.cpp \
+				./src/util/File.cpp \
 				./src/socket/Socket.cpp
 
 OBJS		= 	$(SRCS:.cpp=.o)

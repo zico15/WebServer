@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Server.hpp                                         :+:      :+:    :+:   */
+/*   File.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/09 20:37:00 by ezequeil          #+#    #+#             */
-/*   Updated: 2022/08/16 23:02:56 by edos-san         ###   ########.fr       */
+/*   Created: 2022/08/16 15:48:35 by edos-san          #+#    #+#             */
+/*   Updated: 2022/08/16 16:07:58 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_HPP
-#define SERVER_HPP
+#ifndef FILE_HPP
+# define FILE_HPP
 
-#include <string>
-#include <iostream>
-#include <unordered_map>
-#include <vector>
+# include <iostream>
+# include <fstream>
+# include <string>
 
-#include "../socket/Socket.hpp"
-#include  "../client/Client.hpp"
-
-class Server {
-
+class File
+{
 	private:
-		Socket 					*_socket;
-		std::vector<Client*>	actions;
+		std::string path;
+
 	public:
-		Server();
-		Server(std::string name, int port, int maxClient);
-		~Server();
-		void	listen();
-		void	createClient();
-		void	runClient(int fd);
-	
+		File(std::string path);
+		~File();
+		std::string read();
+		void		write(std::string value);
 };
 
 
 #endif
+

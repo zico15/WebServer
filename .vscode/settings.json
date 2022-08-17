@@ -30,6 +30,7 @@
         "typeinfo": "cpp",
         "cstring": "cpp",
         "unordered_map": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "fstream": "cpp"
     }
 }
