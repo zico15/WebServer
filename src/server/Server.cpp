@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:36:54 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/17 00:05:43 by edos-san         ###   ########.fr       */
+/*   Updated: 2022/08/17 22:40:55 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,28 @@ void Server::listen()
 {
     try
     {
-        _socket->socketListen();
+        int s = _socket->socketListen();
+        if(s <= 0)
+            return ;
         for (int i = 0; i < _socket->getMaxClient(); i++)
     	{
     		if(_socket->getEvent(i)->revents == 0)
     			continue;
-			if (_socket->getEvent(i)->fd == _socket->getFd())
-				createClient();
-            else if (_socket->getEvent(i)->client.isOnline())
+			else if (_socket->getEvent(i)->fd == _socket->getFd())
             {
+                std::cout << "createClient: " <<  i << "\n" ;
+				createClient();
+            }
+            else if (1)
+            {
+                std::cout << "runClient: " <<  i << "\n";
+                for(size_t i = 0; i < actions.size(); i++)
+                    actions[i]->run();
                 //int f = _socket->getEvent(i)->client._fd;
                // std::cout << "Run Client: " << std::to_string(f) << "\n";
-                _socket->getEvent(i)->client.run();
             }
 		}
-        /*for(int i = 0; i < actions.size(); i++)
-            actions[i]->run();*/
+
     }
     catch(const std::exception& e)
     {
@@ -53,14 +59,16 @@ void Server::createClient()
     int fd = _socket->socketAccept();
     if (fd < 0)
         return ;
-    Client *client = _socket->createClient(fd);
-    std::cout << "Create Client: " << std::to_string(fd) << "\n";
+    Client *c = _socket->createClient(fd);
+    if (c)
+        actions.push_back(c);
 }
 
 void Server::runClient(int fd)
 {
     try
     {
+        (void) fd;
         //std::cout << "runClient: " <<  _clients[fd]->_fd << "\n" ;
       
         //actions.push_back(_clients[fd]);

@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:54:58 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/16 23:24:06 by edos-san         ###   ########.fr       */
+/*   Updated: 2022/08/17 22:24:25 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ class Socket
 		char				_buffer[BUFFER_SIZE];
 		int					_port;
 		int					_fd;
-		int					_ic = 0;
-		int					_maxClient;
-		event				_fds[201];
+		int					_ic;
+		size_t				_maxClient;
+		t_event				_fds[201];
 
 	public:
 		Socket();
-		Socket(std::string name,int port, int maxClient);
+		Socket(std::string name,int port, size_t maxClient);
 		~Socket();
 		int		socketListen(void);
 		int		getMaxClient();
 		int		getFd();
-		event	*getEvent(int i);
+		t_event	*getEvent(int i);
 		int		socketAccept(void);
 		void	setEvent(int i, int fd, int event);
 		Client *createClient(int fd_client);

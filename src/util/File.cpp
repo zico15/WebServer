@@ -6,15 +6,18 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:48:35 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/16 16:15:53 by edos-san         ###   ########.fr       */
+/*   Updated: 2022/08/18 00:34:37 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "File.hpp"
 
-File::File(std::string path): path(path)
+File::File(std::string path): _path(path)
 {
-	
+	if (path == "/")
+		_path = "public/index.html";
+	else
+		_path = "public" + _path;
 }
 
 File::~File()
@@ -24,31 +27,33 @@ File::~File()
 
 std::string File::read()
 {
-	std::string       out = "";
-	std::string		  txt;
+	std::stringstream      out;
 
 	try
 	{
-		std::ifstream r(path);
-		while (getline (r, txt))
-		 	out += txt + "\n";
-		r.close();
+		std::ifstream ifs (_path.c_str(), std::ifstream::in);
+		char c = ifs.get();
+  		while (ifs.good()) 
+		{
+    		out << c;
+			c = ifs.get();
+		}
+  		ifs.close();
 	}
 	catch(const std::exception& e)
 	{
 		std::cout << "File ERROR: " << e.what() << '\n';
 	}
-	return (out);
+	return (out.str());
 }
 
 void		File::write(std::string value)
 {
 	try
 	{
-		std::ofstream w(path);
-
-		w << value;
-		w.close();
+		std::ofstream outfile (_path.c_str(),std::ofstream::binary);
+		outfile.write(value.c_str(), value.length());
+		outfile.close();
 	}
 	catch(const std::exception& e)
 	{

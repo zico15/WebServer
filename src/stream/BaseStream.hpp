@@ -6,15 +6,23 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 13:36:04 by edos-san          #+#    #+#             */
-/*   Updated: 2022/08/16 14:40:29 by edos-san         ###   ########.fr       */
+/*   Updated: 2022/08/17 23:51:48 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BASE_STREAM_HPP
 # define BASE_STREAM_HPP
 
-#include <string>
-#include <iostream>
+# include <string>
+# include <iostream>
+# include <sys/socket.h>
+# include <sys/poll.h>
+# include  <bits/stdc++.h>
+
+# include "object/ObjectStream.hpp"
+# include "../util/File.hpp"
+
+typedef struct pollfd t_event;
 
 enum e_method
 {
@@ -26,19 +34,23 @@ enum e_method
 class BaseStream
 {
 	protected:
-		int			status;
-		e_method	method;
-		std::string	domian;
-		std::string	file;
-		std::string	initiator;
-		std::string	type;
-		size_t		transferred;
-		size_t		size;
+		int				_status;
+		e_method		_method;
+		std::string		_domian;
+		std::string		_file;
+		std::string		_initiator;
+		std::string		_type;
+		size_t			_transferred;
+		size_t			_size;
+		int				_fd;
+		char        	_buffer[1025];
 
 	public:
-		virtual void run() = 0;
+		virtual ~BaseStream();
+		virtual BaseStream *run() = 0;
+		t_event			*_event;
+		ObjectStream	*_out;
 		
 };
-
 
 #endif
