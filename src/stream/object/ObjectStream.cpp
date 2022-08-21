@@ -46,6 +46,7 @@ void ObjectStream::addItem(std::string key, std::string value)
 		return ;
 	//std::cout << " key: " << key << "  value: " << value << "\n";
 	values[key] = value;
+	insertOrder.push_back(key);
 }
 
 void ObjectStream::addItem(std::string line)
@@ -71,7 +72,7 @@ void ObjectStream::addItem(std::string line)
 	addItem(key, value);
 }
 
-std::string ObjectStream::getKey(std::string key)
+std::string ObjectStream::getValue(std::string key)
 {
 	return (values[key]);
 }
@@ -81,10 +82,21 @@ ObjectStream::~ObjectStream()
 	
 }
 
+std::string ObjectStream::getKey(int index)
+{
+	return (insertOrder[index]);
+}
+
+std::string ObjectStream::getValues()
+{
+	std::stringstream os;
+	for (size_t i = 0; i < insertOrder.size(); ++i)
+	   os << insertOrder[i] << ": " << values[insertOrder[i]] << "\n";
+	return (os.str());
+}
+
 std::ostream &operator<<(std::ostream &os, ObjectStream &object)
 {
-	std::map<std::string, std::string>::iterator iter;
-	for (iter = object.values.begin(); iter != object.values.end(); ++iter)
-	 	os << iter->first << ": " << iter->second<< std::endl;
+	os << object.getValues();
 	return (os);
 }

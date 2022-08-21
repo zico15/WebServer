@@ -18,11 +18,11 @@ ResponseStream::ResponseStream()
 }
 ResponseStream::ResponseStream(BaseStream *request): _request(request)
 {
-    File file(request->_out->getKey("File"));
+    File file(request->_out->getValue("File"));
     std::stringstream a;
     std::string body = file.read();
     a << "HTTP/1.1 200 OK\r\n";
-    a << "Content-Type: text/html\r\n";
+    a << "Content-Type: " << file.getExtensao() << "\r\n";
     a << "Content-Length: " << body.size() << "\r\n";
     a << "Server: WebServer\r\n";
     a << "Connection: Keep-Alive\r\n\r\n";
