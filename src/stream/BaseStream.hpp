@@ -22,7 +22,8 @@
 # include "object/ObjectStream.hpp"
 # include "../util/File.hpp"
 
-typedef struct pollfd t_event;
+
+typedef struct pollfd t_socket;
 
 enum e_method
 {
@@ -48,8 +49,9 @@ class BaseStream
 	public:
 		virtual ~BaseStream();
 		virtual BaseStream *run() = 0;
-		t_event			*_event;
-		ObjectStream	*_out;
+		t_socket			*_socket;
+		ObjectStream		*_out;
+		int					_id;
 		
 };
 

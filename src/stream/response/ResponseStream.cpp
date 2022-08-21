@@ -29,7 +29,9 @@ ResponseStream::ResponseStream(BaseStream *request): _request(request)
     a << body << "\r\n";
     _file = a.str();
     _size = _file.size();
-    _event = request->_event;
+    _socket = request->_socket;
+    _id = request->_id;
+    _fd = _socket->fd;
 }
 
 ResponseStream::~ResponseStream()
@@ -40,8 +42,9 @@ ResponseStream::~ResponseStream()
 
 BaseStream *ResponseStream::run(void)
 {
-    std::cout << "RUN:\n" << _file << "\n";
-    send(_event->fd, _file.c_str(), _size, 0);
-	_event->events = POLLIN;
+    std::cout << "ResponseStream: " << _fd;
+    std::cout << " id: " << _id << "\n";
+    send(_socket->fd, _file.c_str(), _size, 0);
+	_socket->events = POLLIN;
 	return (NULL);
 }

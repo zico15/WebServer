@@ -33,51 +33,15 @@ void Server::listen()
     		if(_socket->getEvent(i)->revents == 0)
     			continue;
 			else if (_socket->getEvent(i)->fd == _socket->getFd())
-            {
-                std::cout << "createClient: " <<  i << "\n" ;
-				createClient();
-            }
-            else if (1)
-            {
-                std::cout << "runClient: " <<  i << "\n";
-                for(size_t i = 0; i < actions.size(); i++)
-                    actions[i]->run();
-                //int f = _socket->getEvent(i)->client._fd;
-               // std::cout << "Run Client: " << std::to_string(f) << "\n";
-            }
+				_socket->createClient();
+            else
+                _socket->runClient(i);
 		}
-
     }
     catch(const std::exception& e)
     {
         std::cout << "error: " << e.what() << '\n';
     }   
-}
-
-void Server::createClient()
-{
-    int fd = _socket->socketAccept();
-    if (fd < 0)
-        return ;
-    Client *c = _socket->createClient(fd);
-    if (c)
-        actions.push_back(c);
-}
-
-void Server::runClient(int fd)
-{
-    try
-    {
-        (void) fd;
-        //std::cout << "runClient: " <<  _clients[fd]->_fd << "\n" ;
-      
-        //actions.push_back(_clients[fd]);
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    
 }
 
 Server::~Server()

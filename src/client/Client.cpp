@@ -14,18 +14,15 @@
 
 Client::Client()
 {
-    _is_online = false;
     _response = NULL;
-    _request = NULL;
-    _event = NULL;
+    _request  = NULL;
+    _socket = NULL;
 }
 
-Client::Client(t_event *event)
+Client::Client(t_socket *socket): _socket(socket)
 {
-    _is_online = true;
     _response = NULL;
-    _request = NULL;
-    _event = event;
+    _request  = NULL;
 }
 
 Client::~Client() 
@@ -33,44 +30,29 @@ Client::~Client()
     if (_response)
         delete _response;
     if (_request)
-        delete _request;
-    _event->fd = -1;
-    _event->events = 0;
-}
-
-
-void Client::listen()
-{
-   
-}
-
-bool Client::isOnline()
-{
-    return (_is_online);
-}
-
-int Client::getFd()
-{
-    if (_event)
-        return (_event->fd);
-    return (-1);
-}
-
-void Client::run()
-{
-
-   if ( _event->revents == POLLIN)
-   {
-        _request = new RequestStream(_event);
-        _response = _request->run();
-        std::cout << "request ok\n";
-   }
-   else if (_event->revents == POLLOUT && _response)
-   {
-        std::cout << "response init\n";
-        _response->run();
         delete _response;
-        _response = NULL;
-        std::cout << "response ok\n";
-   }
+}
+
+
+
+bool Client::run()
+{
+    if (_socket->revents == POLLIN)
+    {
+        RequestStream *reuest = new RequestStream(_socket);
+
+        _response = reuest->run();
+    }
+    else if (_response && _socket->revents == POLLOUT)
+    {
+         _response->run();
+         delete _response;
+         _response = NULL;
+    }
+    else
+    {
+        std::cout << "CLOSE EVENT\n";
+        return (false);
+    }
+    return (true);
 }

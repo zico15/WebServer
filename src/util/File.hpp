@@ -25,9 +25,11 @@ class File
 
 	public:
 		File(std::string path);
+		File(std::string absolute, std::string file);
 		~File();
 		std::string read();
 		void		write(std::string value);
+		std::string getExtensao();
 };
 
 

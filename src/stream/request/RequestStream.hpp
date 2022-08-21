@@ -21,7 +21,7 @@ class RequestStream: public BaseStream
 	private:
 		/* data */
 	public:
-		RequestStream(t_event *event);
+		RequestStream(t_socket *event);
 		~RequestStream();
 		virtual BaseStream *run();
 };

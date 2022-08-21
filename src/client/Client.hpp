@@ -26,19 +26,14 @@
 class Client {
 
 	private:
-		bool				_is_online;
-        char                _buffer[1024];
 		BaseStream 			*_response;
 		BaseStream 			*_request;
-		t_event				*_event;
+		t_socket 			*_socket;
 
 	public:
 		Client();
-		Client(t_event *event);
+		Client(t_socket *socket);
 		~Client();
-		void listen();
-		void run();
-		bool isOnline();
-		int  getFd();
+		bool run();
 };
 #endif

@@ -20,9 +20,21 @@ File::File(std::string path): _path(path)
 		_path = "public" + _path;
 }
 
+File::File(std::string absolute, std::string file)
+{
+	_path = absolute + "/" + file;
+}
+
 File::~File()
 {
 	
+}
+
+std::string File::getExtensao()
+{
+	if (_path.empty() || _path.find_last_of('.') >= _path.length())
+		return ("");
+	return (_path.substr(_path.find_last_of('.') + 1, _path.length()));
 }
 
 std::string File::read()

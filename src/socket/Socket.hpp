@@ -24,7 +24,7 @@
 #include <sys/ioctl.h>
 #include <sys/poll.h>
 #include <fcntl.h>
-
+#include <map>
 #include  "../client/Client.hpp"
 
 #define BUFFER_SIZE 1024
@@ -33,15 +33,15 @@
 class Socket 
 {
 	private:
-		std::string 		_name;
-		struct sockaddr_in	_addr;
-		socklen_t         	_size;
-		char				_buffer[BUFFER_SIZE];
-		int					_port;
-		int					_fd;
-		int					_ic;
-		size_t				_maxClient;
-		t_event				_fds[201];
+		std::string 			_name;
+		struct sockaddr_in		_addr;
+		socklen_t         		_size;
+		char					_buffer[BUFFER_SIZE];
+		int						_port;
+		int						_fd;
+		size_t					_maxClient;
+		t_socket				*_fds;
+		std::map<int, Client *>	_clients;
 
 	public:
 		Socket();
@@ -50,10 +50,11 @@ class Socket
 		int		socketListen(void);
 		int		getMaxClient();
 		int		getFd();
-		t_event	*getEvent(int i);
+		t_socket	*getEvent(int i);
 		int		socketAccept(void);
 		void	setEvent(int i, int fd, int event);
-		Client *createClient(int fd_client);
+		bool	createClient(void);
+		void	runClient(int i);
 };
 
 #endif

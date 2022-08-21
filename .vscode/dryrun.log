@@ -1,4 +1,4 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/sgoinfre/edos-san/WebServer'
 c++ -Wall -Wextra -Werror -std=c++98 -o websserv main.cpp ./src/server/Server.cpp ./src/client/Client.cpp ./src/stream/request/RequestStream.cpp ./src/stream/response/ResponseStream.cpp ./src/stream/object/ObjectStream.cpp ./src/stream/BaseStream.cpp ./src/util/File.cpp ./src/socket/Socket.cpp
 make: Leaving directory '/sgoinfre/edos-san/WebServer'

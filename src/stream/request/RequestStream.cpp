@@ -26,14 +26,15 @@ std::string replace(std::string str, char c, char j)
 	return (os.str());
 }
 
-RequestStream::RequestStream(t_event *event)
+RequestStream::RequestStream(t_socket *event)
 {
+	static int id = 100;
 	std::string str;
 	_fd = event->fd;
-	_event = event;
+	_socket = event;
 	size_t size;
 
-	std::cout << "Client: " << _fd << "\n";
+	_id = id++;
 	while ((size =   recv(_fd, _buffer, 1024, 0)) > 0)
 	{
 		str += _buffer;
@@ -41,7 +42,6 @@ RequestStream::RequestStream(t_event *event)
 			break ;
 	}
 	_out = new  ObjectStream(str);
-	std::cout << *_out;
 	event->events = POLLOUT;
 }
 
@@ -53,5 +53,7 @@ RequestStream::~RequestStream()
 
 BaseStream *RequestStream::run(void)
 {
+	std::cout << "RequestStream: " << _fd;
+	std::cout << " id: " << _id << "\n";
 	return (new ResponseStream(this));
 }

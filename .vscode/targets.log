@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Aug 17 22:47:55 2022
+# Make data base, printed on Thu Aug 18 00:43:48 2022
 
 # Variables
 
@@ -79,7 +79,6 @@ SRCS = main.cpp ./src/server/Server.cpp ./src/client/Client.cpp ./src/stream/req
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
- 
 ZYPAK_LIB = /app/bin/../lib
 # environment
 MFLAGS = -pqrR
@@ -204,7 +203,7 @@ DISPLAY = :99.0
 # default
 MAKE_VERSION := 4.3
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 658969
+GIO_LAUNCHED_DESKTOP_FILE_PID = 683745
 # environment
 SSH_AGENT_PID = 298488
 # environment
@@ -279,6 +278,7 @@ websserv:
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: ''
 #  File does not exist.
+ 
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # automatic
@@ -359,7 +359,6 @@ norm:
 #  recipe to execute (from 'Makefile', line 43):
 	@norminette -R CheckForbiddenSourceHeader $(SRCS)
 
- 
 e:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -392,12 +391,12 @@ m: fclean
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 25 / storage = 172 B / avg = 6 B
-# current buf: size = 8162 B / used = 172 B / count = 25 / avg = 6 B
+# strcache buffers: 1 (0) / strings = 25 / storage = 170 B / avg = 6 B
+# current buf: size = 8162 B / used = 170 B / count = 25 / avg = 6 B
 
 # strcache performance: lookups = 50 / hit rate = 50%
 # hash-table stats:
 # Load=25/8192=0%, Rehash=0, Collisions=0/50=0%
-# Finished Make data base on Wed Aug 17 22:47:55 2022
+# Finished Make data base on Thu Aug 18 00:43:48 2022
 
  
