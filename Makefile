@@ -10,45 +10,25 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC 			=  c++
-CFLAG		=  -Wall -Wextra -Werror -std=c++98
-RM			= 	/bin/rm -f
-NAME		= 	websserv
-SRCS		= 	main.cpp \
-				./src/server/Server.cpp \
-				./src/client/Client.cpp \
-				./src/stream/request/RequestStream.cpp \
-				./src/stream/response/ResponseStream.cpp \
-				./src/stream/object/ObjectStream.cpp \
-				./src/stream/BaseStream.cpp \
-				./src/util/File.cpp \
-				./src/socket/Socket.cpp
+NAME = server
 
-# OBJS		= 	$(SRCS:.cpp=.o)
+CC = c++ -std=c++98 -pedantic -fsanitize=address -g
+
+SRCS =	$(shell find . -name '*.cpp')
+OBJS = $(addsuffix .o, $(basename $(SRCS)))
+INCLUDES = $(addprefix -I, $(shell find headers -type d))
 
 all: $(NAME)
 
 $(NAME):
-		 $(CC) $(CFLAG) -o $(NAME) $(SRCS)
+	$(CC) $(INCLUDES) $(SRCS) -o $@ $<
 
-# clean:
-# 	@$(RM) $(OBJS)
+clean:
+	rm -rf $(NAME)
 
-fclean: clean
-	@$(RM) $(NAME)
+re: clean all
 
-re: fclean all
-
-norm :
-	@norminette -R CheckForbiddenSourceHeader $(SRCS)
-
-m: fclean
-
-v:
-	@make re && make clean && clear && valgrind --leak-check=full --log-file="logfile.out" -v ./$(NAME):
-e:
-	@make re && make clean && clear && valgrind --leak-check=full --track-origins=yes ./$(NAME):
 r:
-	@make re && make clean && clear && ./$(NAME)
+	make && clear && ./$(NAME)
 
-.PHONY: all re clean fclean m
+.PHONY: all clean re
